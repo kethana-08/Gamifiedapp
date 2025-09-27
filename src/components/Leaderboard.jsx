@@ -8,7 +8,7 @@ export default function Leaderboard() {
   const [showChat, setShowChat] = useState(false);
 const [roomCode, setRoomCode] = useState("");
 const openEducaplayInNewTab = () => {
-    window.open("https://www.educaplay.com/learning-resources/25509289-learn_arena.html", "_blank");
+    window.open("https://superb-dieffenbachia-77a1bc.netlify.app/");
   };
 const handlePlayIndividually = () => {
     openEducaplayInNewTab();
