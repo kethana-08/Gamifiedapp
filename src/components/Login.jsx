@@ -34,6 +34,7 @@ export default function Login() {
 
   return (
     <div style={{ textAlign: "center", paddingTop: "50px" }}>
+      
       <h1>Login / Signup</h1>
       <input
         type="email"

@@ -14,8 +14,9 @@
 }
 
 a {
-  font-weight: 500;
-  color: #646cff;
+  font-weight: 700;
+  color: #ffffff;
+   font-size:200%;
   text-decoration: inherit;
 }
 a:hover {
@@ -26,7 +27,7 @@ a:hover {
 body {
   margin: 0; /* remove default margin */
   padding:0;
-  background-image: url('./assets/background.jpeg'); /* relative to your CSS file */
+  
   background-size: cover; /* make it cover entire screen */
   background-repeat: no-repeat; /* prevent tiling */
   background-position:0%; /* center the image */
@@ -62,10 +63,13 @@ button:focus,
 button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
 }
+h4,h3{
+  color: #daddde; font-size:200%;
 
+}
 @media (prefers-color-scheme: light) {
   :root {
-    color: #2b465e;
+    color: #ffffff;
     background-color: #ffffff;
   }
   a:hover {
@@ -75,10 +79,12 @@ button:focus-visible {
     background-color: #f9f9f9;
   }
   h1,h2{
- color: #000000;
+ color: #daddde;
+ font-family: 'Courier New', Courier, monospace;
+ font-size:500%;
   }
   p{
-    color: #000000;
+    color: #fffefe;
     font-size: 25px;
     font-weight: 600;
   }

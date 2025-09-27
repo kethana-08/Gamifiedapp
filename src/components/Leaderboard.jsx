@@ -1,10 +1,25 @@
 // src/components/Leaderboard.jsx
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 export default function Leaderboard() {
+   const navigate = useNavigate();
   const [mode, setMode] = useState("individual");
   const [showChat, setShowChat] = useState(false);
-
+const [roomCode, setRoomCode] = useState("");
+const openEducaplayInNewTab = () => {
+    window.open("https://www.educaplay.com/learning-resources/25509289-learn_arena.html", "_blank");
+  };
+const handlePlayIndividually = () => {
+    openEducaplayInNewTab();
+  };
+const handlePlayWithFriends = () => {
+    if (roomCode.trim() === "") {
+      alert("Please enter a room code");
+      return;
+    }
+   openEducaplayInNewTab();
+  }
   // Track which section is open
   const [openSection, setOpenSection] = useState(null);
 
@@ -18,7 +33,10 @@ export default function Leaderboard() {
   // Toggle section open/close
   const toggleSection = (section) => {
     setOpenSection(openSection === section ? null : section);
+
+    
   };
+  
 
   return (
     <div style={{ padding: "20px", fontFamily: "Arial" }}>
@@ -40,21 +58,22 @@ export default function Leaderboard() {
       )}
 
       {/* Mode of Play */}
-      <div style={{ marginBottom: "20px" }}>
-        <h2>Mode of Play</h2>
-        <select value={mode} onChange={(e) => setMode(e.target.value)}>
-          <option value="individual">Play Individually</option>
-          <option value="group">Play with Friends</option>
-        </select>
+       <div>
+      <h3>Mode of Play:</h3>
+      <button onClick={handlePlayIndividually}>1.Play Individually</button>
 
-        {mode === "group" && (
-          <div style={{ marginTop: "10px" }}>
-            <input type="text" placeholder="Enter Room Code" />
-            <button>Enter</button>
-            <button>Create Room</button>
-          </div>
-        )}
+      <div style={{ marginTop: "20px" }}>
+        <h4>2.Play with Friends</h4>
+        <input
+          type="text"
+          placeholder="Enter Room Code"
+          value={roomCode}
+          onChange={(e) => setRoomCode(e.target.value)}
+          style={{ marginRight: "10px" }}
+        />
+        <button onClick={handlePlayWithFriends}>Enter Room</button>
       </div>
+    </div>
 
       {/* Study Materials */}
       <button
@@ -84,7 +103,7 @@ export default function Leaderboard() {
       {openSection === "settings" && (
         <div style={{ margin: "10px 0", padding: "10px", border: "3px solid #000000ff" }}>
           <label>
-            Username:
+            Username :
             <input
               type="text"
               value={settings.username}
@@ -95,7 +114,7 @@ export default function Leaderboard() {
           </label>
           <br />
           <label>
-            Full Name:
+            Full Name :  
             <input
               type="text"
               value={settings.name}
@@ -104,7 +123,7 @@ export default function Leaderboard() {
           </label>
           <br />
           <label>
-            Language:
+            Language :
             <select
               value={settings.language}
               onChange={(e) =>
@@ -120,58 +139,7 @@ export default function Leaderboard() {
         </div>
       )}
 
-      {/* Chatbot Button */}
-      <div
-        style={{
-          position: "fixed",
-          bottom: "20px",
-          right: "20px",
-          background: "#007bff",
-          color: "white",
-          padding: "10px",
-          borderRadius: "50%",
-          cursor: "pointer",
-        }}
-        onClick={() => setShowChat(!showChat)}
-      >
-        💬
-      </div>
-
-      {/* Chatbot Window */}
-      {showChat && (
-        <div
-          style={{
-            position: "fixed",
-            bottom: "70px",
-            right: "20px",
-            width: "300px",
-            height: "400px",
-            background: "white",
-            border: "1px solid #ccc",
-            borderRadius: "10px",
-            padding: "10px",
-          }}
-        >
-          <h3>Chatbot 🤖</h3>
-          <div
-            style={{
-              flex: 1,
-              overflowY: "auto",
-              height: "300px",
-              border: "1px solid #ddd",
-              padding: "5px",
-              marginBottom: "10px",
-            }}
-          >
-            <p>Hello! How can I help you?</p>
-          </div>
-          <input
-            type="text"
-            placeholder="Type your message..."
-            style={{ width: "100%", padding: "5px" }}
-          />
-        </div>
-      )}
+      
     </div>
   );
 }

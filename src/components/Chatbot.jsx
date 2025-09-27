@@ -1,118 +1,107 @@
 import React, { useState } from "react";
 
-export default function Leaderboard() {
-  const [showChat, setShowChat] = useState(false);
+export default function Chatbot() {
+  const [open, setOpen] = useState(false);
   const [messages, setMessages] = useState([
-    { sender: "bot", text: "Hello! How can I help you?" },
+    {
+      from: "bot",
+      text: "Greetings, Galaxian7! How can I assist you? Try typing 'help'.",
+    },
   ]);
   const [input, setInput] = useState("");
 
-  // Handle sending message
-  const handleSend = () => {
-    if (!input.trim()) return; // ignore empty input
+  const toggleChat = () => setOpen(!open);
 
-    // Add user message
-    setMessages((prev) => [...prev, { sender: "user", text: input }]);
+  const sendMessage = (e) => {
+    e.preventDefault();
+    if (!input.trim()) return;
 
-    // Save input value before clearing
-    const userText = input;
-    setInput("");
+    const userMsg = { from: "user", text: input };
+    setMessages((prev) => [...prev, userMsg]);
 
-    // Fake bot reply after 1 sec
+    // Bot response logic (from your Leaderboard version)
+    let response =
+      "My apologies, I am still in training. Try 'help' for a list of commands.";
+    const lower = input.toLowerCase();
+    if (lower.includes("help")) {
+      response =
+        "I can help with: \n- Missions: Learn about the games. \n- Coins: Understand how to earn currency.";
+    } else if (lower.includes("mission")) {
+      response =
+        "Missions are STEM-based games designed to test your skills. Launch one from the main grid to start learning!";
+    } else if (lower.includes("coin")) {
+      response =
+        "You earn coins by completing missions and achieving high scores.";
+    }
+
     setTimeout(() => {
-      setMessages((prev) => [
-        ...prev,
-        { sender: "bot", text: "You said: " + userText },
-      ]);
-    }, 1000);
+      setMessages((prev) => [...prev, { from: "bot", text: response }]);
+    }, 500);
+
+    setInput("");
   };
 
   return (
-    <div>
-      <h1>Leaderboard</h1>
+    <div className="fixed bottom-4 right-4 z-40">
+      {open && (
+        <div className="chat-window w-80 h-96 bg-indigo-900/80 backdrop-blur-md rounded-xl border border-purple-600 flex flex-col shadow-2xl origin-bottom-right mb-20 open">
+          {/* Header */}
+          <div className="p-3 border-b border-purple-600 flex justify-between items-center">
+            <h3 className="font-bold text-white">Cosmic Assistant</h3>
+            <button onClick={toggleChat} className="text-gray-400 hover:text-white">
+              ✖
+            </button>
+          </div>
 
-      {/* Floating Chat Button */}
-      <div
-        style={{
-          position: "fixed",
-          bottom: "20px",
-          right: "20px",
-          background: "#007bff",
-          color: "white",
-          padding: "10px",
-          borderRadius: "50%",
-          cursor: "pointer",
-        }}
-        onClick={() => setShowChat(!showChat)}
-      >
-        💬
-      </div>
-
-      {/* Chat Window */}
-      {showChat && (
-        <div
-          style={{
-            position: "fixed",
-            bottom: "70px",
-            right: "20px",
-            width: "300px",
-            height: "400px",
-            background: "white",
-            border: "1px solid #ccc",
-            borderRadius: "10px",
-            padding: "10px",
-            display: "flex",
-            flexDirection: "column",
-          }}
-        >
-          <h3>Chatbot 🤖</h3>
-          <div
-            style={{
-              flex: 1,
-              overflowY: "auto",
-              border: "1px solid #ddd",
-              padding: "5px",
-              marginBottom: "10px",
-            }}
-          >
-            {messages.map((msg, index) => (
-              <p
-                key={index}
-                style={{
-                  textAlign: msg.sender === "user" ? "right" : "left",
-                  color: msg.sender === "user" ? "blue" : "black",
-                  margin: "5px 0",
-                }}
+          {/* Messages */}
+          <div className="flex-1 p-3 space-y-3 overflow-y-auto chat-messages">
+            {messages.map((m, i) => (
+              <div
+                key={i}
+                className={m.from === "user" ? "text-right" : "text-left"}
               >
-                {msg.text}
-              </p>
+                <div
+                  className={`p-2 rounded-lg inline-block max-w-xs break-words ${
+                    m.from === "user"
+                      ? "bg-cyan-600 text-white"
+                      : "bg-purple-800 text-white"
+                  }`}
+                >
+                  {m.text}
+                </div>
+              </div>
             ))}
           </div>
 
-          {/* Input + Send Button */}
-          <div style={{ display: "flex", gap: "5px" }}>
+          {/* Input */}
+          <form
+            onSubmit={sendMessage}
+            className="p-3 border-t border-purple-600 flex gap-2"
+          >
             <input
               type="text"
               value={input}
               onChange={(e) => setInput(e.target.value)}
-              placeholder="Type your message..."
-              style={{ flex: 1, padding: "5px" }}
+              placeholder="Ask me anything..."
+              className="w-full bg-gray-900/50 border border-purple-500 rounded-full px-4 py-2 text-sm text-white"
             />
             <button
-              onClick={handleSend}
-              style={{
-                padding: "5px 10px",
-                background: "#007bff",
-                color: "white",
-                border: "none",
-                borderRadius: "5px",
-              }}
+              type="submit"
+              className="bg-cyan-500 hover:bg-cyan-400 p-2 rounded-full text-gray-900"
             >
-              Send
+              ➤
             </button>
-          </div>
+          </form>
         </div>
       )}
+
+      {/* Floating FAB */}
+      <button
+        onClick={toggleChat}
+        className="chatbot-fab w-16 h-16 bg-gradient-to-br from-cyan-400 to-purple-600 rounded-full flex items-center justify-center text-white shadow-lg"
+      >
+        🤖
+      </button>
     </div>
   );
 }

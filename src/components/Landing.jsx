@@ -19,7 +19,7 @@ export default function Landing() {
 
   return (
     <div style={{ textAlign: "center", paddingTop: "50px" }}>
-      <h1 style={{ animation: "bounce 2s infinite" }}>🎮 Gamified Learning</h1>
+      <h1 style={{ animation: "bounce 2s infinite" }}> Learn-Erena</h1>
       <div style={{ position: "absolute", top: 20, right: 20 }}>
         <select
           value={language}
@@ -31,7 +31,15 @@ export default function Landing() {
         </select>
       </div>
       <button
-        style={{ marginTop: "50px" , padding: "10px 20px", fontSize: "30px" }}
+        style={{ marginTop: "50px",
+    width: "100px",        // equal width
+    height: "100px",       // equal height
+    fontSize: "20px",
+    borderRadius: "50%",   // makes it circular
+    border: "none",
+    backgroundColor: "#4CAF50",
+    color: "white",
+    cursor: "pointer"}}
         onClick={() => navigate("/login")}
       >
         Start
